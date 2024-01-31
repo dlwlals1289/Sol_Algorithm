@@ -7,12 +7,13 @@ N = int(input())
 distance = list(map(int, input().split()))
 oilPrice = list(map(int, input().split()))
 
-lowPrice = min(oilPrice[:N-1])
-l_PriceIndex = oilPrice.index(lowPrice)
+minPrice = oilPrice[0]
 
 answer = 0
-for i in range(l_PriceIndex):
-    answer += distance[i] * oilPrice[i]
-answer += sum(distance[l_PriceIndex:]) * lowPrice
 
+for i in range(N-1):
+    if minPrice > oilPrice[i]:
+        minPrice = oilPrice[i]
+    answer += (distance[i] * minPrice)
+    
 print(answer)
