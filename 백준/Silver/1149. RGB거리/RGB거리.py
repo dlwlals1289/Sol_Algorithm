@@ -3,13 +3,15 @@ import sys
 input = sys.stdin.readline
 
 n = int(input())
-cost = []
-for i in range(n):
-    cost.append(list(map(int, input().split())))
+price = []
 
-for i in range(1,n):
-    cost[i][0] = min(cost[i-1][1], cost[i-1][2]) + cost[i][0]
-    cost[i][1] = min(cost[i-1][0], cost[i-1][2]) + cost[i][1]
-    cost[i][2] = min(cost[i-1][0], cost[i-1][1]) + cost[i][2]
+for _ in range(n):
+    price.append(list(map(int, input().split())))
 
-print(min(cost[n-1]))
+
+for i in range(1, n):
+    price[i][0] = min(price[i-1][1], price[i-1][2]) + price[i][0]
+    price[i][1] = min(price[i-1][0], price[i-1][2]) + price[i][1]
+    price[i][2] = min(price[i-1][0], price[i-1][1]) + price[i][2]
+
+print(min(price[n-1]))
