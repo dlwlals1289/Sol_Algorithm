@@ -1,10 +1,10 @@
 # [level 2] 다음 큰 숫자 - 12911 
 
-[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12911) 
+[문제 링크](https://school.programmers.co.kr/learn/courses/30/lessons/12911?language=python3) 
 
 ### 성능 요약
 
-메모리: 55.1 MB, 시간: 0.03 ms
+메모리: 9.02 MB, 시간: 0.01 ms
 
 ### 구분
 
@@ -16,7 +16,7 @@
 
 ### 제출 일자
 
-2025년 02월 27일 19:06:41
+2025년 04월 29일 17:40:53
 
 ### 문제 설명
 
