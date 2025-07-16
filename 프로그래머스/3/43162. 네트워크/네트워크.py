@@ -1,27 +1,18 @@
-import sys
-input = sys.stdin.readline
-sys.setrecursionlimit(100000)
-            
 def solution(n, computers):
     answer = 0
-    networks = [[] for _ in range(n)]
-    visited = []
     
-    def dfs(a):
-        for i in networks[a]:
-            if i not in visited:
-                visited.append(i)
+    visited = [False] * n
+              
+    def dfs(x):
+        for i in range(n):
+            if i != x and visited[i] != True and computers[x][i] == 1:
+                visited[i] = True
                 dfs(i)
     
     for i in range(n):
-        for j in range(n):
-            if computers[i][j] == 1 and i != j:
-                networks[i].append(j)
-                
-    for i in range(n):
-        if i not in visited:
-            visited.append(i)
+        if visited[i] == False:
             dfs(i)
             answer += 1
-
+            
+            
     return answer
