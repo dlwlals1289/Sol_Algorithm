@@ -1,17 +1,17 @@
-from itertools import combinations
 def solution(numbers, target):
     answer = 0
+    n = len(numbers)
     
-    for i in range(1, len(numbers)+1):
-        for j in combinations(range(len(numbers)), i):
-            tmp = 0
-            
-            for k in range(len(numbers)):
-                if k in j:
-                    tmp += numbers[k]
-                else:
-                    tmp -= numbers[k]
-            if tmp == target:
+    def dfs(depth, sum):
+        nonlocal answer
+        if depth == n:
+            if sum == target:
                 answer += 1
-    
+            return 
+
+        dfs(depth+1, sum+numbers[depth])
+        dfs(depth+1, sum-numbers[depth])
+        
+        
+    dfs(0, 0)
     return answer
