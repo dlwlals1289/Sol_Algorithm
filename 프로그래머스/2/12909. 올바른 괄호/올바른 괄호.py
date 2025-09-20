@@ -2,13 +2,17 @@ def solution(s):
     answer = True
     stack = []
     
-    for c in s:
-        if c == '(':
-            stack.append(c)
-        elif c == ')' and len(stack) != 0 and stack[-1] == '(':
-            stack.pop()
-        else : 
-            return False
+    for str in s:
+        if str == '(':
+            stack.append(str)
+            continue
+        if len(stack) > 0:
+            tmp = stack.pop()
+        
+            if tmp != '(':
+                return False
+        else:
+            answer = False
     if len(stack) != 0:
         return False
-    return True
+    return answer
