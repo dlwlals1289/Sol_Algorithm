@@ -1,12 +1,15 @@
 def solution(brown, yellow):
-    answer = [0, 0]
+    answer = []
     
-    for i in range(1, yellow+1):
-        if yellow % i == 0: # 노란색 타일 개수의 약수
-            row = yellow // i
-            col = yellow // row
+    for row in range(1, ((yellow+1)//2)+1):
+        if yellow % row == 0:
+            col = (yellow // row)
             
-            if 2 * (row + col + 2) == brown:
-                answer[0] = col + 2;
-                answer[1] = row + 2;
+            tmp = 2 * (col + row + 2)
+            
+            if tmp == brown:
+                answer.append(col+2)
+                answer.append(row+2)
+                break
+            
     return answer
