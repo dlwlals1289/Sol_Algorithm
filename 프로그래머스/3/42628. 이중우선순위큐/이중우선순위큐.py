@@ -1,32 +1,24 @@
-from collections import deque
+import heapq
 def solution(operations):
     answer = []
-    oper = []
-    queue = deque()
+    nums = []
+    heapq.heapify(nums)
     
-    for i in operations:
-        op, num = i.split(" ")
-        num = int(num)
-        queue = deque(sorted(queue))
+    for operation in operations:
+        op, num = operation.split(" ")
         
-        if op == "I":
-            queue.append(num)
-        elif num == 1 and len(queue) > 0:
-            queue.pop()
-        elif num == -1 and len(queue) > 0:
-            queue.popleft()
-        else: 
-            continue
-        # oper.append([op, num])
-    
-    # for op, num for oper:
-    #     if op == "I":
-
-    if len(queue) > 0:
-        queue = deque(sorted(queue))
-        answer.append(queue.pop())
-        answer.append(queue.popleft())
+        if op == 'I':
+            heapq.heappush(nums, int(num))
+        elif op == 'D':
+            if num == '-1' and nums != []:
+                heapq.heappop(nums)
+            elif num == '1' and nums != []:
+                maxNum = max(nums)
+                nums.remove(maxNum)
+                
+    if nums == []:
+        answer = [0, 0]
     else:
-        answer = [0,0]
-            
+        answer.append(max(nums))
+        answer.append(heapq.heappop(nums))
     return answer
