@@ -1,24 +1,23 @@
-def solution(tickets):   
-    answers = []
-    visited = [0 for _ in range(len(tickets))]
+def solution(tickets):
+    answer = []
+    n = len(tickets)
+    used = [False] * n
     
     def dfs(route):
-        if 0 not in visited:
-            answers.append([city for city in route])
-            return
-        for i in range(len(tickets)):
-            if visited[i] == 0 and route[-1] == tickets[i][0]:
-                visited[i] = 1
-                route.append(tickets[i][1])
+        if len(route) == n+1:
+            answer.append(route[:])
+        for i, t in enumerate(tickets):
+            if not used[i] and route[-1] == t[0]:
+                used[i] = True
+                route.append(t[1])
                 dfs(route)
+                used[i] = False
                 route.pop()
-                visited[i] = 0
-                
-    for i in range(len(tickets)):
-        if tickets[i][0] == "ICN":
-            visited[i] = 1
-            dfs([tickets[i][0], tickets[i][1]])
-            visited[i] = 0
-
-    answers.sort()
-    return answers[0]
+    
+    for i, ticket in enumerate(tickets):
+        if ticket[0] == "ICN":
+            used[i] = True
+            dfs([ticket[0], ticket[1]])
+            used[i] = False
+    answer.sort()
+    return answer[0]
