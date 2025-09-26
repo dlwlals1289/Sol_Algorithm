@@ -1,21 +1,17 @@
 def solution(people, limit):
+    n = len(people)
     answer = 0
-    idx = 0
-    num = len(people)
-    visited = [False for _ in range(num)]
+    visited = [False] * n
     
     people.sort()
-   
-    for i in range(num-1, -1, -1):
-        if visited[i] == True :
-            continue
-        elif people[i] + people[idx] <= limit:
-            visited[i] = True
-            visited[idx] = True
+    left, right = 0, n-1
+    
+    while left <= right:
+        if people[left] + people[right] <= limit:
             answer += 1
-            idx += 1
-        else :
-            visited[i] = True
+            left += 1
+            right -= 1
+        else:
             answer += 1
-            
+            right -= 1
     return answer
