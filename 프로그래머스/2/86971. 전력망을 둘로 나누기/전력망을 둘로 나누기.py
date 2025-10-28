@@ -1,44 +1,32 @@
-from collections import deque
 import math
-
-    
+from collections import deque
 def solution(n, wires):
     answer = n
-    
-    tree = [[]*(n+1) for _ in range(n+1)]
-    for a, b in wires:
-        tree[a].append(b)
-        tree[b].append(a)
-    
-    
-    def bfs(node):
-        nonlocal answer
-        q = deque()
-        visited = [False]*(n+1)
-        q.append(node)
-        visited[node] = True
-        cnt = 0
+                
+    for i in range(n-1):
+        arr = [[] for _ in range(n+1)]
+        visited = [False] *(n+1)
         
-        while q:
-            now = q.popleft()
-            cnt += 1
-            
-            for next in tree[now]:
-                if not visited[next]:
-                    q.append(next)
-                    visited[next] = True
-        
-        answer = min(answer, abs(n-cnt*2))
+        for j in range(n-1):
+            if i != j:
+                v1, v2 = wires[j][0], wires[j][1]
 
-    
-    for a, b in wires:
-        tree[a].remove(b)
-        tree[b].remove(a)
+                arr[v1].append(v2)
+                arr[v2].append(v1)
+
+        q = deque([1])
+        visited[1] = True
         
-        for i in tree:
-            if i != []:
-                bfs(i[0])
-                break
-        tree[a].append(b)
-        tree[b].append(a)
+        tmp = 0
+        while q:
+            node = q.popleft()
+            tmp += 1
+            
+            for i in arr[node]:
+                if not visited[i]:
+                    visited[i] = True
+                    q.append(i)
+
+        answer = min(abs(2*tmp - n), answer)
+            
     return answer
