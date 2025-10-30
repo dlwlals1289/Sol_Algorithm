@@ -1,0 +1,17 @@
+SELECT 
+    sub.ID,
+    sub.FISH_NAME,
+    sub.LENGTH
+FROM (
+    SELECT 
+        a.ID,
+        b.FISH_NAME,
+        a.LENGTH,
+        RANK() OVER (PARTITION BY a.FISH_TYPE ORDER BY a.LENGTH DESC) AS RANKING
+    FROM FISH_INFO AS a
+    JOIN FISH_NAME_INFO AS b ON a.FISH_TYPE = b.FISH_TYPE
+    WHERE a.LENGTH IS NOT NULL
+) sub
+WHERE sub.RANKING = 1
+ORDER BY sub.ID;
+    
