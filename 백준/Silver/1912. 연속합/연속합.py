@@ -3,11 +3,13 @@ import sys
 input = sys.stdin.readline
 
 n = int(input())
-array = list(map(int, input().split()))
+nums = list(map(int, input().split()))
+cur = -1000
+maxSum = -1000
 
-ans = []
-ans.append(array[0])
-for i in range(1,n):
-    ans.append(max(array[i], ans[i-1]+array[i]))
+for num in nums:
+    cur = max(num, num+cur)
+    maxSum = max(cur, maxSum)
+    # print(cur, maxSum)
 
-print(max(ans))
+print(maxSum)
