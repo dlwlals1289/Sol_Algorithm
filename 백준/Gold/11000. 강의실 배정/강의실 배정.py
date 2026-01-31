@@ -1,17 +1,16 @@
-# 강의실배정
+# 강의실 배정
 import sys
 import heapq
 input = sys.stdin.readline
 
-n = int(input())
-array = [list(map(int, input().split())) for _ in range(n)]
-array.sort(key= lambda x : (x[0], x[1]))
+N = int(input())
+lesson = [list(map(int, input().split())) for _ in range(N)]
+lesson.sort(key = lambda x : x[0])
 
-heap = []
-heapq.heappush(heap, array[0][1])
-for i in range(1, n):
-    if heap[0] <= array[i][0]:
-        heapq.heappop(heap)
-    heapq.heappush(heap, array[i][1])
+rooms = []
 
-print(len(heap))
+for i in range(N):
+    if rooms and rooms[0] <= lesson[i][0]:
+        heapq.heappop(rooms)
+    heapq.heappush(rooms, lesson[i][1])
+print(len(rooms))
