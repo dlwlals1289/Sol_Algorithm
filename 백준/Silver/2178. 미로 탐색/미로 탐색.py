@@ -3,31 +3,27 @@ import sys
 from collections import deque
 input = sys.stdin.readline
 
-#     좌  우  상  하
-dx = [-1, 1, 0, 0] 
-dy = [0, 0, -1, 1]
+N, M = map(int, input().split())
+maze = [list(map(int, input().strip())) for _ in range(N)]
+answer = 1
 
-n, m = map(int, input().split())
-maze = []
-cnt = 1
+dx = [1, 0, -1, 0]
+dy = [0, -1, 0, 1]
+visited = [[False] * M for _ in range(N)]
 
-def bfs(x, y):
-    queue = deque()
-    queue.append((x,y))
+q = deque()
+q.append((0,0))
+visited[0][0] = True
+
+while q:
+    x, y = q.popleft()
     
-    while queue:
-        x, y = queue.popleft()
+    for i in range(4):
+        nx, ny = x + dx[i], y + dy[i]
         
-        for i in range(4):
-            nx = x + dx[i]
-            ny = y + dy[i]
-            
-            if 0 <= nx < n and 0 <= ny < m and maze[nx][ny] == 1:
-                maze[nx][ny] = maze[x][y] + 1
-                queue.append((nx, ny))
-    return maze[n-1][m-1]     
+        if 0 <= nx < M and 0 <= ny < N and not visited[ny][nx] and maze[ny][nx] != 0:
+            q.append((nx, ny))
+            visited[ny][nx] = True
+            maze[ny][nx] = maze[y][x] + 1
 
-for i in range(n):
-    maze.append(list(map(int, input().rstrip())))
-
-print(bfs(0,0))
+print(maze[N-1][M-1])
