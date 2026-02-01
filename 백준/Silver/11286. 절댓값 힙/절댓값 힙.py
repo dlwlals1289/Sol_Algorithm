@@ -3,17 +3,17 @@ import sys
 import heapq
 input = sys.stdin.readline
 
-n = int(input())
-abs_array = []
-
-for i in range(n):
+N = int(input())
+hq = []
+    
+for i in range(N):
     num = int(input())
     
-    if num:
-        heapq.heappush(abs_array, (abs(num), num))
-    else:
-        if abs_array:
-            min = heapq.heappop(abs_array)[1]
-            print(min)
-        else:
+    if num == 0:
+        if not hq:
             print(0)
+        else:
+            absNum, n = heapq.heappop(hq)
+            print(n)
+    else:
+        heapq.heappush(hq, (abs(num), num))
