@@ -1,21 +1,17 @@
-from heapq import heappush, heappop, heapify
+from heapq import heappop, heappush
+
 def solution(n, works):
     answer = 0
-    arr = []
+    hq = []
     
     for work in works:
-        heappush(arr, -work)
+        heappush(hq, -work)
     
     for i in range(n):
-        w = heappop(arr)
+        work = heappop(hq)
         
-        if w+1 < 0:
-            heappush(arr, w+1)
-        else :
-            heappush(arr, 0)
-        
+        heappush(hq, min(work + 1,0))
     
-    for num in arr:
-        answer += ((-num)**2)
-    
+    for num in hq:
+        answer += (num*num)
     return answer
