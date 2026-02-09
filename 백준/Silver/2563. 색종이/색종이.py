@@ -1,17 +1,21 @@
 # 색종이
 import sys
+from heapq import heappop, heappush
+input = sys.stdin.readline
 
-T = int(input())
+t = int(input())
+paper = [[0] * 101 for _ in range(101)]
 answer = 0
-paper = [[0]*100 for _ in range(100)]
 
-for _ in range(T):
-    left, bottom = map(int, input().split())
-    
-    for i in range(bottom, bottom+10):
-        for j in range(left, left+10):
-            if(paper[i][j] == 0):
-                answer += 1
-                paper[i][j] = 1
-    
+for _ in range(t):
+    x, y = map(int, input().split())
+    for i in range(x, x+10):
+        for j in range(y, y+10):
+            paper[i][j] = 1
+
+for i in range(1, 101):
+    for j in range(1, 101):
+        if paper[i][j] == 1:
+            answer += 1
+
 print(answer)
