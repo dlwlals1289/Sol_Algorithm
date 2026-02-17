@@ -1,26 +1,25 @@
-#15:01
 def solution(stones, k):
-    answer = 200000000
+    answer = 0
     n = len(stones)
-    left, right = 1, answer
     
-    def calc(person):
-        tmp = 0
-        for s in stones:
-            if s - person < 0:
-                tmp += 1
-                if tmp == k:
-                    return False
-            else:
-                tmp = 0
-        return True
+    left, right = min(stones), max(stones)
     
     while left <= right:
-        mid = (left + right) // 2
+        mid = (left + right)//2
+        cnt = 0
         
-        if calc(mid):
+        for stone in stones:
+            if stone < mid:
+                cnt += 1
+                
+                if cnt == k:
+                    break
+            else:
+                cnt = 0
+        if cnt >= k:
+            right = mid - 1
+        else:
             answer = mid
             left = mid + 1
-        else:
-            right = mid - 1
+            
     return answer
