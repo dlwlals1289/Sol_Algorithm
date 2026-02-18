@@ -1,27 +1,27 @@
-# 15:45 - 
 from collections import deque
 def solution(n, roads, sources, destination):
     answer = []
     graph = [[] for _ in range(n+1)]
+    dist_from_dest = [-1 for _ in range(n+1)]
     
     for road in roads:
         a, b = road
         graph[a].append(b)
         graph[b].append(a)
         
-    visited = [False] * (n+1)
-    visited[destination] = True
-    q = deque([destination])
-    dist = [-1] * (n+1)
-    dist[destination] = 0
-    
-    while q:
-        now = q.popleft()
+    q = deque([])
+    q.append((destination,0))
+    dist_from_dest[destination] = 0
 
-        for city in graph[now]:
-            if dist[city] == -1:
-                dist[city] = dist[now] + 1
-                q.append(city)
+    while q:
+        node, dist = q.popleft()
+
+        for next_node in graph[node]:
+            if dist_from_dest[next_node] == -1:
+                dist_from_dest[next_node] = dist + 1
+                q.append((next_node, dist+1))
     
-    answer = [dist[s] for s in sources]
+    for source in sources:
+        answer.append(dist_from_dest[source])
+        
     return answer
