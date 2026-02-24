@@ -1,18 +1,20 @@
 def solution(n, times):
-    left, right = 1, max(times) * n
-    answer = right
+    answer = 1000000000*n
+    times.sort()
     
-    while left <= right:
+    left, right = 1, times[-1]*n
+    
+    while left < right:
         mid = (left + right) // 2
-        total = 0
-
+    
+        tmp = 0
         for time in times:
-            total += (mid // time)
+            tmp += mid // time
         
-        if total < n:
+        if tmp >= n:
+            answer = min(answer, mid)
+            right = mid
+        elif tmp < n :
             left = mid + 1
-        else:
-            right = mid - 1
-            answer = mid
     
     return answer
