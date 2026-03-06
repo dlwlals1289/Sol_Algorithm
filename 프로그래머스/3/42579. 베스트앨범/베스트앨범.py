@@ -1,24 +1,24 @@
 from collections import defaultdict
+from heapq import heappush, heappop
 def solution(genres, plays):
     answer = []
     n = len(genres)
-    total = defaultdict(int)
-    dic = defaultdict(list)
-    num_genre = len(dic)
+    m = len(set(genres))
+    save = defaultdict(list)
     
     for i in range(n):
-        total[genres[i]] += plays[i]
-        dic[genres[i]].append([plays[i], i])
-    
-    sort_dict = dict(sorted(total.items(), key = lambda x : x[1], reverse = True))
-    
-    for genre in sort_dict.keys():
+        save[genres[i]].append([plays[i], i])
 
-        tmp = sorted(dic[genre], key = lambda x : (-x[0], x[1]))
-        if len(tmp) == 1:
-            answer.append(tmp[0][1])
-        else:
-            for i in range(2):
-                answer.append(tmp[i][1])
-     
+    total_plays = []
+    for i in save:
+        tmp = 0
+        for play, _ in save[i]:
+            tmp += play
+        heappush(total_plays, [-tmp, i])
+        
+    for i in range(m):
+        _, genre = heappop(total_plays)
+        save[genre].sort(key = lambda x : (-x[0], x[1]))
+        for j in range(min(len(save[genre]), 2)):
+            answer.append(save[genre][j][1])
     return answer
